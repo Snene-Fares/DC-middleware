@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: DC-middleware
+
+# Server
+server:
+  port: 8080
+
+# OAuth2 Configuration
+oauth2:
+  provider:
+    base-url: https://dcdevsso.dubaichamber.com
+    authorize: oauth2/authorize
+    authn: oauth2/authn
+    token: oauth2/token
+    logout: oidc/logout
+  client:
+    id: sq_R1zmC3lqH2EUJwsWQ8wxA7Kca
+    redirect-uri: https://sampleseibelmobileapp.com/home
+    scope: openid internal_login
+
+
+logging:
+  level:
+    org:
+      springframework: debug
+    root: debug
+
+
+rest-ws:
+  scim-user-management:
+    base-url: https://dcdigitalservicessso.dubaichamber.com
+    basic-auth:
+      username: admin
+      password: Duba1Ch@mb3rsprd!
+    get-user:
+      url: scim2/Users
+    update-user:
+      url: t/carbon.super/scim2/Users/{uuid}
+    reset-password:
+      url: t/carbon.super/scim2/Users/{uuid}
+  user-registration:
+    base-url: https://dcdevsso.dubaichamber.com
+    basic-auth:
+      username: mobileappapiuser
+      password: Duba1DccCh@mb3r!_
+    self-register:
+      url: api/identity/user/v1.0/me
+
