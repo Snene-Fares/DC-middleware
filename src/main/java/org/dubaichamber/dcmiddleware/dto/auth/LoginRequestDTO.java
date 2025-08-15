@@ -1,4 +1,4 @@
-package org.dubaichamber.dcmiddleware.dto;
+package org.dubaichamber.dcmiddleware.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

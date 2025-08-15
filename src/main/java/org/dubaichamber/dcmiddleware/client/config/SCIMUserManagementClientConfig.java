@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-public class SCIMUserManagementConfig {
+public class SCIMUserManagementClientConfig {
     @Value("${rest-ws.scim-user-management.basic-auth.username}")
     private String username;
     @Value("${rest-ws.scim-user-management.basic-auth.password}")

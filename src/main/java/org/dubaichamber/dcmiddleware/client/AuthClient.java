@@ -1,17 +1,18 @@
 package org.dubaichamber.dcmiddleware.client;
 
+import org.dubaichamber.dcmiddleware.client.config.AuthClientConfig;
 import org.dubaichamber.dcmiddleware.client.config.CommonClientConfig;
-import org.dubaichamber.dcmiddleware.dto.AuthenticateRequestWsDTO;
-import org.dubaichamber.dcmiddleware.dto.AuthenticateResponseWsDTO;
-import org.dubaichamber.dcmiddleware.dto.AuthorizeResponseWsDTO;
-import org.dubaichamber.dcmiddleware.dto.TokenWsResponseDTO;
+import org.dubaichamber.dcmiddleware.dto.auth.AuthenticateRequestWsDTO;
+import org.dubaichamber.dcmiddleware.dto.auth.AuthenticateResponseWsDTO;
+import org.dubaichamber.dcmiddleware.dto.auth.AuthorizeResponseWsDTO;
+import org.dubaichamber.dcmiddleware.dto.auth.TokenWsResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "auth-client", url = "${oauth2.provider.base-url}" ,
-        configuration = {CommonClientConfig.class, }
+        configuration = {CommonClientConfig.class, AuthClientConfig.class }
 )
 public interface AuthClient {
 

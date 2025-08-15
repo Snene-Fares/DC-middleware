@@ -1,8 +1,8 @@
 package org.dubaichamber.dcmiddleware.mapper;
 
-import org.dubaichamber.dcmiddleware.dto.AuthenticateRequestWsDTO;
-import org.dubaichamber.dcmiddleware.dto.AuthorizeResponseWsDTO;
-import org.dubaichamber.dcmiddleware.dto.LoginRequestDTO;
+import org.dubaichamber.dcmiddleware.dto.auth.AuthenticateRequestWsDTO;
+import org.dubaichamber.dcmiddleware.dto.auth.AuthorizeResponseWsDTO;
+import org.dubaichamber.dcmiddleware.dto.auth.LoginRequestDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

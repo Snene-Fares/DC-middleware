@@ -2,10 +2,10 @@ package org.dubaichamber.dcmiddleware.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.dubaichamber.dcmiddleware.client.AuthClient;
-import org.dubaichamber.dcmiddleware.dto.AuthenticateResponseWsDTO;
-import org.dubaichamber.dcmiddleware.dto.AuthorizeResponseWsDTO;
-import org.dubaichamber.dcmiddleware.dto.LoginRequestDTO;
-import org.dubaichamber.dcmiddleware.dto.TokenWsResponseDTO;
+import org.dubaichamber.dcmiddleware.dto.auth.AuthenticateResponseWsDTO;
+import org.dubaichamber.dcmiddleware.dto.auth.AuthorizeResponseWsDTO;
+import org.dubaichamber.dcmiddleware.dto.auth.LoginRequestDTO;
+import org.dubaichamber.dcmiddleware.dto.auth.TokenWsResponseDTO;
 import org.dubaichamber.dcmiddleware.mapper.OAuth2Mapper;
 import org.dubaichamber.dcmiddleware.service.OAuth2Service;
 import org.dubaichamber.dcmiddleware.util.PkceUtil;

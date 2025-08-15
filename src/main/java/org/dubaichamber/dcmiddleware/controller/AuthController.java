@@ -1,8 +1,8 @@
 package org.dubaichamber.dcmiddleware.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.dubaichamber.dcmiddleware.dto.LoginRequestDTO;
-import org.dubaichamber.dcmiddleware.dto.TokenWsResponseDTO;
+import org.dubaichamber.dcmiddleware.dto.auth.LoginRequestDTO;
+import org.dubaichamber.dcmiddleware.dto.auth.TokenWsResponseDTO;
 import org.dubaichamber.dcmiddleware.service.impl.OAuth2ServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -24,7 +24,8 @@ logging:
   level:
     org:
       springframework: debug
-    root: debug
+      dubaichamber: debug
+    root: ERROR
 
 
 rest-ws:
@@ -37,8 +38,7 @@ rest-ws:
       url: scim2/Users
     update-user:
       url: t/carbon.super/scim2/Users/{uuid}
-    reset-password:
-      url: t/carbon.super/scim2/Users/{uuid}
+
   user-registration:
     base-url: https://dcdevsso.dubaichamber.com
     basic-auth:
@@ -47,3 +47,26 @@ rest-ws:
     self-register:
       url: api/identity/user/v1.0/me
 
+  cp-services:
+    base-url: https://dcsoafmwdev.dubaichamber.com
+    headers:
+      siebel-user: TESTDEV66
+      basic-auth:
+        username: EAIUSER
+        password: EAISa#14##12
+    list-values:
+      url: DCCICPIntegration/ListOfValues_REST/GetListOfValues
+    license-info:
+      url: DCCIProfessionalLicenseDetails/MemberDataToSiebel_REST/memberdata
+    validate-member-license:
+      url: DCCICPIntegration/ValidateAccount_REST/ValidateAccount
+    get-srs-services-fees:
+      url: DCCICPIntegration/GetSrServiceFeesREST_ProxyService/GetSrServiceFees
+    verify-signature:
+      url: DCCICreateSVS/SVSProxyService_rest/Signature
+    query-svs:
+      url: DCCICreateSVS/SVSProxyService_rest/QuerySVS
+    auth-cert:
+      url: DCCICreateSVS/SVSProxyService_rest/AuthCert
+    true-copy:
+      url: DCCICreateSVS/SVSProxyService_rest/TrueCopy

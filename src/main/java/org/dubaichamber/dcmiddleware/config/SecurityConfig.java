@@ -36,7 +36,7 @@ public class SecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(new JwtTokenFilter(objectMapper),AbstractPreAuthenticatedProcessingFilter.class)
-                .addFilter(preAuthenticatedFilter)
+                .addFilterAfter(preAuthenticatedFilter, JwtTokenFilter.class)
         ;
 
         return http.build();

@@ -1,4 +1,4 @@
-package org.dubaichamber.dcmiddleware.dto;
+package org.dubaichamber.dcmiddleware.dto.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
