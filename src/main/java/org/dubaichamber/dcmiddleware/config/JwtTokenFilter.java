@@ -1,6 +1,7 @@
 package org.dubaichamber.dcmiddleware.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
@@ -13,24 +14,31 @@ import lombok.RequiredArgsConstructor;
 import org.dubaichamber.dcmiddleware.exceptions.GenericErrorResponseDTO;
 import org.dubaichamber.dcmiddleware.exceptions.GenericException;
 import org.dubaichamber.dcmiddleware.util.TokenUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
+    @Value("${oauth2.client.id}")
+    private String clientId;
     private final ObjectMapper objectMapper;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String errorCode;
         String message;
-        if (request.getHeaders(AUTHORIZATION).hasMoreElements()) {
+        if (Objects.nonNull(request.getHeader(AUTHORIZATION))) {
             try {
-                String userId = TokenUtils.decodeWithoutVerification(request.getHeaders(AUTHORIZATION).nextElement()).get("sub").toString();
+                Claims claims = TokenUtils.decodeWithoutVerification(request.getHeader(AUTHORIZATION));
+                if (!Objects.equals(claims.get("client_id").toString(), clientId)) throw new RuntimeException();
+                String userId = claims.getSubject();
                 request.setAttribute("userId", userId);
             } catch (Exception ex) {
             if (ex instanceof ExpiredJwtException) {
