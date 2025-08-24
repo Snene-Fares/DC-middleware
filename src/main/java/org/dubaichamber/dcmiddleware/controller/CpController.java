@@ -1,6 +1,9 @@
 package org.dubaichamber.dcmiddleware.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.dubaichamber.dcmiddleware.dto.cp.ValuesListRequestDTO;
+import org.dubaichamber.dcmiddleware.dto.cp.ValuesListWsRequestDTO;
 import org.dubaichamber.dcmiddleware.service.CpService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +17,7 @@ public class CpController {
     private final CpService cpService;
 
     @PostMapping("values-list")
-    public ResponseEntity<List<Object>> valuesList(@RequestBody Object request) {
+    public ResponseEntity<Object> valuesList(@RequestBody @Valid ValuesListRequestDTO request) {
         return ResponseEntity.ok(cpService.valuesList(request));
     }
 

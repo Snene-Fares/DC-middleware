@@ -2,6 +2,7 @@ package org.dubaichamber.dcmiddleware.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,7 +21,8 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
         securedEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
-
+    @Value("${oauth2.client.id}")
+    private String clientId;
     private final AuthenticationManager authenticationManager;
     private final ObjectMapper objectMapper;
 
@@ -35,7 +37,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()
                 )
-                .addFilterBefore(new JwtTokenFilter(objectMapper),AbstractPreAuthenticatedProcessingFilter.class)
+                .addFilterBefore(new JwtTokenFilter(clientId,objectMapper),AbstractPreAuthenticatedProcessingFilter.class)
                 .addFilterAfter(preAuthenticatedFilter, JwtTokenFilter.class)
         ;
 

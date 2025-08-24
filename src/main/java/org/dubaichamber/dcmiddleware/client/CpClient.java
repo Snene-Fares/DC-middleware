@@ -3,6 +3,7 @@ package org.dubaichamber.dcmiddleware.client;
 import org.dubaichamber.dcmiddleware.client.config.AuthClientConfig;
 import org.dubaichamber.dcmiddleware.client.config.CommonClientConfig;
 import org.dubaichamber.dcmiddleware.client.config.CpClientConfig;
+import org.dubaichamber.dcmiddleware.dto.cp.ValuesListWsRequestDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,7 @@ import java.util.List;
 public interface CpClient {
 
     @PostMapping("${rest-ws.cp-services.list-values.url}")
-    List<Object> valuesList(@RequestBody Object request);
+    Object valuesList(@RequestBody ValuesListWsRequestDTO request);
 
     @PostMapping("${rest-ws.cp-services.license-info.url}")
     Object licenseInfo(@RequestBody Object request);

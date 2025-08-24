@@ -26,8 +26,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
-    @Value("${oauth2.client.id}")
-    private String clientId;
+    private final String clientId;
     private final ObjectMapper objectMapper;
 
     @Override

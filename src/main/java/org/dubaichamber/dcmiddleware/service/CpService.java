@@ -1,9 +1,12 @@
 package org.dubaichamber.dcmiddleware.service;
 
+import org.dubaichamber.dcmiddleware.dto.cp.ValuesListRequestDTO;
+import org.dubaichamber.dcmiddleware.dto.cp.ValuesListWsRequestDTO;
+
 import java.util.List;
 
 public interface CpService {
-    List<Object> valuesList(Object request);
+    Object valuesList(ValuesListRequestDTO request);
 
     Object licenseInfo(Object request);
 

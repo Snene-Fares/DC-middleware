@@ -2,6 +2,9 @@ package org.dubaichamber.dcmiddleware.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.dubaichamber.dcmiddleware.client.CpClient;
+import org.dubaichamber.dcmiddleware.dto.cp.ValuesListRequestDTO;
+import org.dubaichamber.dcmiddleware.dto.cp.ValuesListWsRequestDTO;
+import org.dubaichamber.dcmiddleware.mapper.CpMapper;
 import org.dubaichamber.dcmiddleware.service.CpService;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +14,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CpServiceImpl implements CpService {
     private final CpClient cpClient;
+    private final CpMapper cpMapper;
+
     @Override
-    public List<Object> valuesList(Object request) {
-        return cpClient.valuesList(request);
+    public Object valuesList(ValuesListRequestDTO request) {
+        return cpClient.valuesList(cpMapper.mapValuesListRequest(request));
     }
 
     @Override
