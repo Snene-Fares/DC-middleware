@@ -3,6 +3,7 @@ package org.dubaichamber.dcmiddleware.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.dubaichamber.dcmiddleware.client.SCIMUserManagementClient;
 import org.dubaichamber.dcmiddleware.dto.scimusermanagement.ScimUserListWsResponseDTO;
+import org.dubaichamber.dcmiddleware.dto.scimusermanagement.SimpleUserResponseDTO;
 import org.dubaichamber.dcmiddleware.mapper.SCIMUserManagementMapper;
 import org.dubaichamber.dcmiddleware.service.SCIMUserManagementService;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,12 @@ public class SCIMUserManagementServiceImpl implements SCIMUserManagementService 
     private final SCIMUserManagementMapper scimUserManagementMapper;
 
     @Override
-    public ScimUserListWsResponseDTO getUser(String userName) {
-        return scimUserManagementClient.getUser(filterFormatter(userName));
+    public SimpleUserResponseDTO getUser(String userName) {
+        ScimUserListWsResponseDTO response = scimUserManagementClient.getUser(filterFormatter(userName));
+        if (response.getResources() != null && !response.getResources().isEmpty()) {
+            return scimUserManagementMapper.mapToSimpleUserResponse(response.getResources().get(0));
+        }
+        return null;
     }
 
     @Override

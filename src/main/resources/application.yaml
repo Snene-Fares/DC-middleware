@@ -30,10 +30,12 @@ logging:
 
 rest-ws:
   scim-user-management:
-    base-url: https://dcdigitalservicessso.dubaichamber.com
+#    base-url: https://dcdigitalservicessso.dubaichamber.com
+    base-url: https://dcdevsso.dubaichamber.com
     basic-auth:
       username: admin
-      password: Duba1Ch@mb3rsprd!
+#      password: Duba1Ch@mb3rsprd!
+      password: Duba1Ch@mb3r!
     get-user:
       url: scim2/Users
     update-user:
@@ -70,3 +72,4 @@ rest-ws:
       url: DCCICreateSVS/SVSProxyService_rest/AuthCert
     true-copy:
       url: DCCICreateSVS/SVSProxyService_rest/TrueCopy
+

@@ -1,6 +1,8 @@
 package org.dubaichamber.dcmiddleware.mapper;
 
 import org.dubaichamber.dcmiddleware.dto.scimusermanagement.ResetPasswordWsRequestDTO;
+import org.dubaichamber.dcmiddleware.dto.scimusermanagement.ScimUserListWsResponseDTO;
+import org.dubaichamber.dcmiddleware.dto.scimusermanagement.SimpleUserResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -28,8 +30,41 @@ public interface SCIMUserManagementMapper {
         List<ResetPasswordWsRequestDTO.Operation> operations = new ArrayList<>();
         ResetPasswordWsRequestDTO.Operation operation = new ResetPasswordWsRequestDTO.Operation();
         operation.setOp("replace");
-        operation.getValue().setPassword(newPassword);
+        ResetPasswordWsRequestDTO.Value value = new ResetPasswordWsRequestDTO.Value();
+        value.setPassword(newPassword);
+        operation.setValue(value);
         operations.add(operation);
         return operations;
+    }
+
+    default SimpleUserResponseDTO mapToSimpleUserResponse(ScimUserListWsResponseDTO.Resource resource) {
+        if (resource == null) return null;
+
+        SimpleUserResponseDTO dto = new SimpleUserResponseDTO();
+        dto.setId(resource.getId());
+        dto.setUserName(resource.getUserName());
+        dto.setFirstName(resource.getName() != null ? resource.getName().givenName() : null);
+        dto.setLastName(resource.getName() != null ? resource.getName().familyName() : null);
+        dto.setEmail(resource.getEmails() != null && !resource.getEmails().isEmpty() ? resource.getEmails().get(0) : null);
+        dto.setMobile(resource.getPhoneNumbers() != null && !resource.getPhoneNumbers().isEmpty()
+                ? resource.getPhoneNumbers().stream()
+                .filter(p -> "mobile".equalsIgnoreCase(p.type()))
+                .findFirst()
+                .map(p -> p.value())
+                .orElse(null)
+                : null);
+        dto.setCountry(resource.getEnterpriseUserExtension() != null ? resource.getEnterpriseUserExtension().country() : null);
+        dto.setTitle(resource.getTitle());
+        return dto;
+    }
+
+    default List<SimpleUserResponseDTO> mapToSimpleUserResponseList(List<ScimUserListWsResponseDTO.Resource> resources) {
+        List<SimpleUserResponseDTO> list = new ArrayList<>();
+        if (resources != null) {
+            for (ScimUserListWsResponseDTO.Resource res : resources) {
+                list.add(mapToSimpleUserResponse(res));
+            }
+        }
+        return list;
     }
 }
