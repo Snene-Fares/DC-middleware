@@ -6,6 +6,7 @@ import org.dubaichamber.dcmiddleware.dto.scimusermanagement.ScimUserListWsRespon
 import org.dubaichamber.dcmiddleware.dto.scimusermanagement.SimpleUserResponseDTO;
 import org.dubaichamber.dcmiddleware.mapper.SCIMUserManagementMapper;
 import org.dubaichamber.dcmiddleware.service.SCIMUserManagementService;
+import org.dubaichamber.dcmiddleware.util.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,22 +16,20 @@ public class SCIMUserManagementServiceImpl implements SCIMUserManagementService 
     private final SCIMUserManagementMapper scimUserManagementMapper;
 
     @Override
-    public SimpleUserResponseDTO getUser(String userName) {
-        ScimUserListWsResponseDTO response = scimUserManagementClient.getUser(filterFormatter(userName));
-        if (response.getResources() != null && !response.getResources().isEmpty()) {
-            return scimUserManagementMapper.mapToSimpleUserResponse(response.getResources().get(0));
-        }
-        return null;
+    public ScimUserListWsResponseDTO getUser() {
+        return scimUserManagementClient.getUser(filterFormatter(SecurityUtils.getAuthenticatedUserId()));
     }
 
     @Override
-    public void resetPassword(String uuid, String newPassword) {
-        scimUserManagementClient.updateUser(uuid,scimUserManagementMapper.mapRequest(newPassword));
+    public void resetPassword(String newPassword) {
+        ScimUserListWsResponseDTO user = getUser();
+        scimUserManagementClient.updateUser(user.getResources().get(1).getId(),scimUserManagementMapper.mapRequest(newPassword));
     }
 
     @Override
-    public void updateUser(String uuid, Object request) {
-        scimUserManagementClient.updateUser(uuid,request);
+    public void updateUser(Object request) {
+        ScimUserListWsResponseDTO user = getUser();
+        scimUserManagementClient.updateUser(user.getResources().get(1).getId(),request);
     }
 
     private String filterFormatter(String filter) {
