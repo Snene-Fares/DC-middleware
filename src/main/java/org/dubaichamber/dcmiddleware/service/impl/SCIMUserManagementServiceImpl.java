@@ -16,6 +16,7 @@ public class SCIMUserManagementServiceImpl implements SCIMUserManagementService 
     private final SCIMUserManagementMapper scimUserManagementMapper;
 
     @Override
+
     public ScimUserListWsResponseDTO getUser() {
         return scimUserManagementClient.getUser(filterFormatter(SecurityUtils.getAuthenticatedUserId()));
     }
