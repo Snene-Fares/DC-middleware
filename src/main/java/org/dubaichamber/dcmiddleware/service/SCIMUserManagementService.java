@@ -4,9 +4,9 @@ import org.dubaichamber.dcmiddleware.dto.scimusermanagement.ScimUserListWsRespon
 import org.springframework.http.ResponseEntity;
 
 public interface SCIMUserManagementService {
-    ScimUserListWsResponseDTO getUser(String userName);
+    ScimUserListWsResponseDTO getUser();
 
-    void resetPassword(String uuid, String newPassword);
+    void resetPassword(String newPassword);
 
-    void updateUser(String uuid, Object request);
+    void updateUser(Object request);
 }
