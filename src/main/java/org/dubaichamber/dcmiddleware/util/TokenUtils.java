@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 public class TokenUtils {
 
     public static Claims decodeWithoutVerification(String token) {
+        if (token.contains("Bearer "))
+            token = token.substring(7);
         int i = token.lastIndexOf('.');
         String withoutSignature = token.substring(0, i+1);
         return Jwts.parser().parseClaimsJwt(withoutSignature).getBody();
