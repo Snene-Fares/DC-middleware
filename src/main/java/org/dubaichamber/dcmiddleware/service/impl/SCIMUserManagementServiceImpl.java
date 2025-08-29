@@ -3,10 +3,9 @@ package org.dubaichamber.dcmiddleware.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.dubaichamber.dcmiddleware.client.SCIMUserManagementClient;
 import org.dubaichamber.dcmiddleware.dto.scimusermanagement.ScimUserListWsResponseDTO;
-import org.dubaichamber.dcmiddleware.dto.scimusermanagement.SimpleUserResponseDTO;
 import org.dubaichamber.dcmiddleware.mapper.SCIMUserManagementMapper;
 import org.dubaichamber.dcmiddleware.service.SCIMUserManagementService;
-import org.dubaichamber.dcmiddleware.util.SecurityUtils;
+import org.dubaichamber.dcmiddleware.util.SCIMProfileHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,39 +13,22 @@ import org.springframework.stereotype.Service;
 public class SCIMUserManagementServiceImpl implements SCIMUserManagementService {
     private final SCIMUserManagementClient scimUserManagementClient;
     private final SCIMUserManagementMapper scimUserManagementMapper;
+    private final SCIMProfileHolder scimProfileHolder;
 
     @Override
-
-    public SimpleUserResponseDTO  getUser() {
-        ScimUserListWsResponseDTO userResponse = scimUserManagementClient.getUser(
-                filterFormatter(SecurityUtils.getAuthenticatedUserId())
-        );
-        if (userResponse.getResources() != null && !userResponse.getResources().isEmpty()) {
-            return scimUserManagementMapper.mapToSimpleUserResponse(userResponse.getResources().get(0));
-        }
-        return null;
+    public ScimUserListWsResponseDTO getUser() {
+        return scimProfileHolder.get();
     }
 
     @Override
     public void resetPassword(String newPassword) {
-        SimpleUserResponseDTO user = getUser();
-        if (user != null) {
-            scimUserManagementClient.updateUser(
-                    user.getId(),
-                    scimUserManagementMapper.mapRequest(newPassword)
-            );
-        }
+        scimUserManagementClient.updateUser(scimProfileHolder.getUUID(),scimUserManagementMapper.mapRequest(newPassword));
     }
 
     @Override
     public void updateUser(Object request) {
-        SimpleUserResponseDTO user = getUser();
-        if (user != null) {
-            scimUserManagementClient.updateUser(user.getId(), request);
-        }
+        scimUserManagementClient.updateUser(scimProfileHolder.getUUID(),request);
     }
 
-    private String filterFormatter(String filter) {
-        return "userName eq \"" + filter + "\"";
-    }
+
 }
