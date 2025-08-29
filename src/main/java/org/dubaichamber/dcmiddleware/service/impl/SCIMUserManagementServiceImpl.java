@@ -17,20 +17,33 @@ public class SCIMUserManagementServiceImpl implements SCIMUserManagementService 
 
     @Override
 
-    public ScimUserListWsResponseDTO getUser() {
-        return scimUserManagementClient.getUser(filterFormatter(SecurityUtils.getAuthenticatedUserId()));
+    public SimpleUserResponseDTO  getUser() {
+        ScimUserListWsResponseDTO userResponse = scimUserManagementClient.getUser(
+                filterFormatter(SecurityUtils.getAuthenticatedUserId())
+        );
+        if (userResponse.getResources() != null && !userResponse.getResources().isEmpty()) {
+            return scimUserManagementMapper.mapToSimpleUserResponse(userResponse.getResources().get(0));
+        }
+        return null;
     }
 
     @Override
     public void resetPassword(String newPassword) {
-        ScimUserListWsResponseDTO user = getUser();
-        scimUserManagementClient.updateUser(user.getResources().get(1).getId(),scimUserManagementMapper.mapRequest(newPassword));
+        SimpleUserResponseDTO user = getUser();
+        if (user != null) {
+            scimUserManagementClient.updateUser(
+                    user.getId(),
+                    scimUserManagementMapper.mapRequest(newPassword)
+            );
+        }
     }
 
     @Override
     public void updateUser(Object request) {
-        ScimUserListWsResponseDTO user = getUser();
-        scimUserManagementClient.updateUser(user.getResources().get(1).getId(),request);
+        SimpleUserResponseDTO user = getUser();
+        if (user != null) {
+            scimUserManagementClient.updateUser(user.getId(), request);
+        }
     }
 
     private String filterFormatter(String filter) {

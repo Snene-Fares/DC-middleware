@@ -1,14 +1,11 @@
 package org.dubaichamber.dcmiddleware.mapper;
 
-import org.dubaichamber.dcmiddleware.dto.scimusermanagement.ResetPasswordWsRequestDTO;
-import org.dubaichamber.dcmiddleware.dto.scimusermanagement.ScimUserListWsResponseDTO;
-import org.dubaichamber.dcmiddleware.dto.scimusermanagement.SimpleUserResponseDTO;
+import org.dubaichamber.dcmiddleware.dto.scimusermanagement.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Mapper(componentModel = "spring")
 public interface SCIMUserManagementMapper {
@@ -67,4 +64,8 @@ public interface SCIMUserManagementMapper {
         }
         return list;
     }
+
+
+
+
 }

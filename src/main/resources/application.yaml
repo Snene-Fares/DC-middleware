@@ -73,3 +73,21 @@ rest-ws:
     true-copy:
       url: DCCICreateSVS/SVSProxyService_rest/TrueCopy
 
+  dci-public:
+    base-url: https://www.dubaichambercommerce.com
+    basic-auth:
+      username: nishant@xponential.ae
+      password: fR2yiwrefrlcHich
+    get-service-cards:
+      url: /o/headless-delivery/v1.0/content-structures/233454/structured-contents
+    get-terms-conditions:
+      url: /o/headless-delivery/v1.0/content-structures/271372/structured-contents
+    get-faqs:
+      url: /o/headless-delivery/v1.0/content-structures/273136/structured-contents
+    contact-us:
+      url: /o/c/feedbacks/
+    get-upcoming-events:
+      url: /o/headless-delivery/v1.0/content-structures/233406/structured-contents
+    get-news-articles:
+      url: /o/headless-delivery/v1.0/content-structures/233418/structured-contents
+

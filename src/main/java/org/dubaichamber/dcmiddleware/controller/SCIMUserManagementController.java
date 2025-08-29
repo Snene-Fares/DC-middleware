@@ -15,8 +15,7 @@ public class SCIMUserManagementController {
     private final SCIMUserManagementService scimUserManagementService;
 
     @GetMapping
-
-    public ResponseEntity<ScimUserListWsResponseDTO> getUser() {
+    public ResponseEntity<SimpleUserResponseDTO> getUser() {
         return ResponseEntity.ok(scimUserManagementService.getUser());
     }
 

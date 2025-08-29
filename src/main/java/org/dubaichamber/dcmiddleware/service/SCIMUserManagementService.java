@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface SCIMUserManagementService {
 
-    ScimUserListWsResponseDTO getUser();
+    SimpleUserResponseDTO getUser();
 
     void resetPassword(String newPassword);
 
