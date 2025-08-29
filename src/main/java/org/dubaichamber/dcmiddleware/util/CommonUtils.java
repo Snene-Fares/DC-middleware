@@ -11,4 +11,8 @@ public class CommonUtils {
     public static String getBasicAuthorizationHeader(String username, String password) {
         return "Basic " + Base64.getEncoder().encodeToString(username.concat(":").concat(password).getBytes());
     }
+
+    public static String filterFormatter(String filter) {
+        return "userName eq \"" + filter + "\"";
+    }
 }
