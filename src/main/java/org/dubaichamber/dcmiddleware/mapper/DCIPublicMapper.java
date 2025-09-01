@@ -2,13 +2,17 @@ package org.dubaichamber.dcmiddleware.mapper;
 
 import org.dubaichamber.dcmiddleware.dto.dcipublic.*;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Mapper(componentModel = "spring")
 public interface DCIPublicMapper {
+    String FAQ_TITLE = "FAQ Title";
+    String FAQ_DESCRIPTION = "FAQ Description";
+
 
     default List<SimpleTermsConditionsDto> mapTermsConditions(TermsConditionsResponseDto response) {
         List<SimpleTermsConditionsDto> result = new ArrayList<>();
@@ -34,6 +38,28 @@ public interface DCIPublicMapper {
 
         return result;
     }
+
+    default List<SimpleTermsConditionsDto> mapTermsCondition(TermsConditionsResponseDto response) {
+        if (Objects.isNull(response)) {
+            return Collections.emptyList();
+        }
+        return  response.getItems().stream()
+                .flatMap(itemDto -> safeStream(itemDto.getContentFields()))
+                .filter(Objects::nonNull)
+                .filter(contentFieldDto -> FAQ_TITLE.equals(contentFieldDto.getLabel()) || FAQ_DESCRIPTION.equals(contentFieldDto.getLabel()))
+                .map(this::mapTermsCondition)
+                .toList();
+    }
+
+    default <T> Stream<T> safeStream(Collection<T> collection) {
+        return Optional.ofNullable(collection)
+                .orElse(Collections.emptyList())
+                .stream()
+                .filter(Objects::nonNull);
+    }
+    @Mapping(source = "label", target = "title")
+    @Mapping(source = "contentFieldValue.data", target = "description")
+    SimpleTermsConditionsDto mapTermsCondition(TermsConditionsResponseDto.ContentFieldDto contentFieldDto);
 
     default List<SimpleFaqDto> mapFaqs(FaqResponseDto response) {
         if (response == null || response.getItems() == null) return List.of();

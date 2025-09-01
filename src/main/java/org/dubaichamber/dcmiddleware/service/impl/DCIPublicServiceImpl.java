@@ -18,7 +18,7 @@ public class DCIPublicServiceImpl implements DCIPublicService {
     @Override
     public List<SimpleTermsConditionsDto> getTermsConditions() {
         TermsConditionsResponseDto response = dciPublicClient.getTermsConditions();
-        return dciPublicMapper.mapTermsConditions(response);
+        return dciPublicMapper.mapTermsCondition(response);
     }
 
     @Override
