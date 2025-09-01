@@ -3,6 +3,7 @@ package org.dubaichamber.dcmiddleware.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.dubaichamber.dcmiddleware.client.SCIMUserManagementClient;
 import org.dubaichamber.dcmiddleware.dto.scimusermanagement.ScimUserListWsResponseDTO;
+import org.dubaichamber.dcmiddleware.dto.scimusermanagement.SimpleUserResponseDTO;
 import org.dubaichamber.dcmiddleware.mapper.SCIMUserManagementMapper;
 import org.dubaichamber.dcmiddleware.service.SCIMUserManagementService;
 import org.dubaichamber.dcmiddleware.util.SCIMProfileHolder;
@@ -16,8 +17,8 @@ public class SCIMUserManagementServiceImpl implements SCIMUserManagementService 
     private final SCIMProfileHolder scimProfileHolder;
 
     @Override
-    public ScimUserListWsResponseDTO getUser() {
-        return scimProfileHolder.get();
+    public SimpleUserResponseDTO getUser() {
+        return scimUserManagementMapper.mapToSimpleUserResponse(scimProfileHolder.get().getResources().get(1));
     }
 
     @Override
